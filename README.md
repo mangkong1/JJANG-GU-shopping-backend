@@ -8,7 +8,6 @@
 - 고정화
 - 류충현
 - 박소영
-- 이지민
 
 ### ✔️ Back-End
 - 정상준
@@ -40,11 +39,11 @@
 ```
 master
 ├── dev-be
-│   ├── feature/
-│   │   │
-│   │   │ 
-│   │   │ 
-│___│___└─
+│   ├── feature/mongodb
+│   ├── feature/data-model
+│   │ 
+│   │ 
+│___│__
 ```
 feature/(기능명)으로 개인 작업 브랜치 생성, 기능구현 후 dev에 MR
 
