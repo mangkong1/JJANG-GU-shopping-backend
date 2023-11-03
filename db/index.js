@@ -13,6 +13,7 @@ db.on('error', (error) => {
 });
 
 // db 모델 export
+export * from './models/user-model'
 export * from './models/category-model';
 export * from './models/product-model';
 export * from './models/order-model';
