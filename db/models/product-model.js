@@ -1,4 +1,4 @@
-import { model } from "mongoose";
+import { model, Types } from "mongoose";
 import { ProductSchema } from "../schemas/product-schema";
 
 const Product = model('products', ProductSchema);
@@ -19,8 +19,12 @@ export class ProductModel {
     //상품 조회
     async findByName(name) {
         try {
-            const productResult = await Product.findOne({ name });
-            return productResult;
+            const productResult = await Product.aggregate([
+                {
+                    $match: { name: name }
+                }
+            ]);
+            return productResult[0];
         } catch (error) {
             // 오류 처리 코드 추가
             throw new Error('상품 조회 중 오류 발생');
@@ -29,11 +33,31 @@ export class ProductModel {
 
     async findById(productId) {
         try {
-            const productResult = await Product.findOne({ _id: productId }).populate(
-                'category',
-                '_id, name'
-            );
-            return productResult;
+            // 1. `$match` 단계: MongoDB에서 `_id`가 `productId`와 일치하는 상품을 필터링
+            const productResult = await Product.aggregate([
+                {
+                    $match: { _id: Types.ObjectId(productId) }
+                },
+                // 2. `$lookup` 단계: `category` 필드와 `categories` 컬렉션을 연결하여 카테고리 정보를 가져옴.
+                {
+                    $lookup: {
+                        from: 'categories',
+                        localField: 'category',
+                        foreignField: '_id',
+                        as: 'category'
+                    }
+                },
+                // 3. `$project` 단계: 결과 문서를 필요한 필드만 선택하여 반환.
+                {
+                    $project: {
+                        _id: 1,
+                        name: 1,
+                        category: { _id:1, name: 1}
+                    }
+                }
+            ]);
+            // 4. 반환: 조회된 결과가 배열로 반환되므로 첫 번째 항목을 반환.
+            return productResult[0];
         } catch (error) {
             // 오류 처리 코드 추가
             throw new Error('상품 조회 중 오류 발생');
@@ -42,10 +66,27 @@ export class ProductModel {
 
     async findByCategoryId(categoryId) {
         try {
-            const productResult = await Product.find({ category: categoryId }).populate(
-                'category',
-                '_id, name'
-            );
+            const productResult = await Product.aggregate([
+                {
+                    $match: { category: Types.ObjectId(categoryId) }
+                },
+                {
+                    $lookup: {
+                        from: 'categories',
+                        localField: 'category',
+                        foreignField: '_id',
+                        as: 'category'
+                    }
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        name: 1,
+                        category: { _id: 1, name: 1 }
+                    }
+                }
+            ]);
+            return productResult;
         } catch (error) {
             // 오류 처리 코드 추가
             throw new Error('상품 조회 중 오류 발생');
@@ -54,10 +95,24 @@ export class ProductModel {
 
     async findAll() {
         try {
-            const productModel = await Product.find({}).populate(
-                'category',
-                '_id, name'
-            );
+            const productResult = await Product.aggregate([
+                {
+                    $lookup: {
+                        from: 'categories',
+                        localField: 'category',
+                        foreignField: '_id',
+                        as: 'category'
+                    }
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        name: 1,
+                        category: { _id: 1, name: 1 }
+                    }
+                }
+            ]);
+            return productResult;
         } catch (error) {
             // 오류 처리 코드 추가
             throw new Error('상품 조회 중 오류 발생');
@@ -70,11 +125,8 @@ export class ProductModel {
     async delete(productId) {
         try {
             const productResult = await Product.deleteOne({ _id: productId });
-            if (productResult.deletedCount > 0) {
-                return { message: '상품 삭제 성공' };
-            } else {
-                return { message: '삭제할 상품이 없습니다.'};
-            }
+            const message = productResult.deletedCount > 0 ? '상품 삭제 성공' : '삭제할 상품이 없습니다.';
+            return { message };
         } catch (error) {
             // 오류 처리 코드 추가
             throw new Error('상품 삭제 중 오류 발생');

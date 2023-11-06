@@ -1,4 +1,4 @@
-import { model } from "mongoose";
+import { model, Types } from "mongoose";
 import { OrderSchema } from "../schemas/order-schema";
 
 const Order = model('orders', OrderSchema);
@@ -39,7 +39,16 @@ export class OrderModel {
     // 주문 조회
     async findAll() {
         try {
-            const orderResult = await Order.find({}).populate('products.productId');
+            const orderResult = await Order.aggregate([
+                {
+                    $lookup: {
+                        from: 'products',
+                        localField: 'products.productId',
+                        foreignField: '_id',
+                        as: 'products'
+                    }
+                }
+            ]);
             return orderResult;
         } catch (error) {
             // 오류 처리 코드 추가
@@ -49,7 +58,19 @@ export class OrderModel {
 
     async findAllByUserId(userId) {
         try {
-            const orderResult = await Order.find({ userId }).populate('products.productId');
+            const orderResult = await Order.aggregate([
+                {
+                    $match: { userId }
+                },
+                {
+                    $lookup: {
+                        from: 'products',
+                        localField: 'products.productId',
+                        foreignField: '_id',
+                        as: 'products'
+                    }
+                }
+            ]);
             return orderResult;
         } catch (error) {
             // 오류 처리 코드 추가
@@ -59,8 +80,20 @@ export class OrderModel {
 
     async findById(orderId) {
         try {
-            const orderResult = await Order.findOne({ _id: orderId }).populate('products.productId');
-            return orderResult;
+            const orderResult = await Order.aggregate([
+                {
+                    $match: { _id: Types.ObjectId(orderId) }
+                },
+                {
+                    $lookup: {
+                        from: 'products',
+                        localField: 'products.productId',
+                        foreignField: '_id',
+                        as: 'products'
+                    }
+                }
+            ]);
+            return orderResult[0]; // 결과는 배열로 반환되므로 첫 번째 항목을 반환
         } catch (error) {
             // 오류 처리 코드 추가
             throw new Error('주문 조회 중 오류 발생');
@@ -73,12 +106,8 @@ export class OrderModel {
     async delete(orderId) {
         try {
             const orderResult = await Order.deleteOne({ _id: orderId });
-            
-            if (orderResult.deletedCount > 0) {
-                return { message: '주문 삭제 완료' };
-            } else {
-                return { message: '삭제할 주문이 없습니다.'};
-            }
+            const message = orderResult.deletedCount > 0 ? '주문 삭제 완료' : '삭제할 주문이 없습니다.';
+            return { message };
         } catch (error) {
             // 오류 처리 코드 추가
             throw new Error('주문 삭제 중 오류 발생');
