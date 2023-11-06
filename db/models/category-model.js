@@ -69,6 +69,17 @@ export class CategoryModel {
     }
 
     // 카테고리 수정
+    async update({ categoryId, update }) {
+        const filter = { _id: categoryId };
+        const updateResult = await Category.updateOne(filter, update);
+    
+        if (updateResult.nModified === 0) {
+            // 업데이트된 카테고리 수정이 없는 경우 nModified
+            throw new Error('업데이트할 카테고리를 찾을 수 없습니다.');
+        }
+    
+        return { message: '카테고리 업데이트 완료' };
+    }
 
     // 카테고리 삭제
     async delete(categoryId) {
