@@ -101,6 +101,17 @@ export class OrderModel {
     }
 
     // 주문 수정
+    async update({ orderId, update }) {
+        const filter = { _id: orderId };
+        const updateResult = await Order.updateOne(filter, update);
+    
+        if (updateResult.nModified === 0) {
+            // 업데이트된 카테고리 수정이 없는 경우 nModified
+            throw new Error('업데이트할 주문 정보를 찾을 수 없습니다.');
+        }
+
+        return { message: '주문 정보 업데이트 완료' };
+    }
 
     // 주문 삭제
     async delete(orderId) {
