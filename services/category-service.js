@@ -13,38 +13,33 @@ class CategoryService {
         if (category) {
             throw new Error('해당 카테고리명은 현재 사용 중입니다. 다른 카테고리명을 입력해주세요.');
         }
-
-        const createdNewCategory = await this.categoryModel.create(categoryInfo);
-        return createdNewCategory;
+        return await this.categoryModel.create(categoryInfo);
     }
 
     // 카테고리 조회
     async getCategories() {
-        const categories = await this.categoryModel.findAll();
-        return categories;
+        return await this.categoryModel.findAll();
     }
 
     async getCategory(categoryId) {
-        const category = await this.categoryModel.findById(categoryId);
-
-        if (!category) {
-            throw new Error('카테고리를 찾을 수 없습니다.');
-        }
-
-        return category;
+        return await this.categoryModel.findById(categoryId);
     }
 
     // 카테고리 업데이트
-    async updateCategory(categoryId, updateData) {
-        const category = await this.categoryModel.findById(categoryId);
+    async updateCategory(categoryInfoRequired, toUpdate) {
+        const { categoryId } = categoryInfoRequired;
+        let category = await this.categoryModel.findById(categoryId);
     
         if (!category) {
-            throw new Error('카테고리를 찾을 수 없습니다.');
+          throw new Error('등록된 카테고리가 없습니다. 다시 한 번 확인해 주세요.');
         }
     
-        const updatedCategory = await this.categoryModel.update(categoryId, updateData);
+        category = await this.categoryModel.update({
+          categoryId,
+          update: toUpdate,
+        });
     
-        return updatedCategory;
+        return category;
     }
 
     // 카테고리 제거
