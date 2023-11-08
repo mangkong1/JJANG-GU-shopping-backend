@@ -1,4 +1,4 @@
-import { categoryModel } from "../db";
+import { categoryModel } from "../db/models/category-model";
 
 class CategoryService {
     constructor(categoryModel) {

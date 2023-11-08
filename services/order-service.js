@@ -1,4 +1,4 @@
-import { orderModel } from '../db';
+import { orderModel } from '../db/models/order-model';
 
 class OrderService {
   constructor(orderModel) {

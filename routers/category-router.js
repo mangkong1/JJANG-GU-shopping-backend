@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { adminCheck, emptyObejctCheck } from '../middlewares';
-import { categoryService } from '../services';
+import { adminCheck } from '../middlewares/adminCheck';
+import { emptyObejctCheck } from '../middlewares/emptyObjectCheck';
+import { categoryService } from '../services/category-service';
 
 const router = Router();
 
