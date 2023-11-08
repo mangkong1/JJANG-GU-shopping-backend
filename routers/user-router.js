@@ -33,15 +33,15 @@ router.post('/', emptyObejctCheck, async (req, res, next) => {
     }
 });
 
-router.get('/:token', loginRequired, async function (req, res, next) {
-    try {
-        const currentUserId = req.currentUserId;
-        const user = await userService.getUser({ _id: currentUserId });
-        res.status(200).json(user);
-    } catch (error) {
-        next(error);
-    }
-});
+// router.get('/:token', loginRequired, async function (req, res, next) {
+//     try {
+//         const currentUserId = req.currentUserId;
+//         const user = await userService.getUser({ _id: currentUserId });
+//         res.status(200).json(user);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
 router.get('/', loginRequired, async function (req, res, next) {
     try {
@@ -141,12 +141,12 @@ router.delete('/admin/:userId', adminCheck, async function (req, res, next) {
     }
 });
 
-router.get('/admin/check', adminCheck, async function (req, res, next) {
-    try {
-      res.status(200).json({ result: 'success' });
-    } catch (error) {
-      next(error);
-    }
-});
+// router.get('/admin/check', adminCheck, async function (req, res, next) {
+//     try {
+//       res.status(200).json({ result: 'success' });
+//     } catch (error) {
+//       next(error);
+//     }
+// });
 
 export { userRouter };
