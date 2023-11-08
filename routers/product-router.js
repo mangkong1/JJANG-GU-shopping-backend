@@ -1,8 +1,32 @@
 import { Router } from 'express';
 import { adminCheck, emptyObejctCheck } from '../middlewares';
 import { productService } from '../services';
+import multer from 'multer';
 
 const router = Router();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'views/uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Math.floor(Math.random() * 1000000) + '-' + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post('/upload', upload.array('productImages', 10), async (req, res) => {
+    let images = [];
+
+    for (let i = 0; i < req.files.length; i++) {
+      images.push(`/uploads/${req.files[i].filename}`);
+    }
+
+    res.json({ images });
+  }
+);
+
 
 router.post('/', adminCheck, emptyObejctCheck, async (req, res, next) => {
       try {
