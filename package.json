@@ -4,7 +4,7 @@
   "description": "- 김태형 (팀장)\r - 고정화\r - 류충현\r - 박소영\r - 이지민",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node --experimental-specifier-resolution=node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
