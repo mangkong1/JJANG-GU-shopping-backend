@@ -1,5 +1,5 @@
 import { model, Types } from "mongoose";
-import { ProductSchema } from "../schemas/product-schema";
+import { ProductSchema } from "../schemas/product-schema.js";
 
 const Product = model('products', ProductSchema);
 

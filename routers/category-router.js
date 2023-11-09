@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { adminCheck } from '../middlewares/adminCheck';
-import { emptyObejctCheck } from '../middlewares/emptyObjectCheck';
-import { categoryService } from '../services/category-service';
+import { adminCheck } from '../middlewares/adminCheck.js';
+import { emptyObejctCheck } from '../middlewares/emptyObjectCheck.js';
+import { categoryService } from '../services/category-service.js';
 
 const router = Router();
 

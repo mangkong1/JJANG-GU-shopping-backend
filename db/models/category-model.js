@@ -1,5 +1,5 @@
 import { model, Types } from 'mongoose';
-import { CategorySchema } from '../schemas/category-schema';
+import { CategorySchema } from '../schemas/category-schema.js';
 
 const Category = model('categories', CategorySchema);
 

@@ -1,4 +1,4 @@
-import { productModel } from "../db/models/product-model";
+import { productModel } from "../db/models/product-model.js";
 
 class ProductService {
     constructor(productModel) {

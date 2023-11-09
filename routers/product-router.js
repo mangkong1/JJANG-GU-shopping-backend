@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { adminCheck } from '../middlewares/adminCheck';
-import { emptyObejctCheck } from '../middlewares/emptyObjectCheck';
-import { productService } from '../services/product-service';
+import { adminCheck } from '../middlewares/adminCheck.js';
+import { emptyObejctCheck } from '../middlewares/emptyObjectCheck.js';
+import { productService } from '../services/product-service.js';
 import multer from 'multer';
 
 const router = Router();
