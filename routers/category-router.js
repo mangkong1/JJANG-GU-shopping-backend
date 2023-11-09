@@ -3,9 +3,9 @@ import { adminCheck } from '../middlewares/adminCheck.js';
 import { emptyObejctCheck } from '../middlewares/emptyObjectCheck.js';
 import { categoryService } from '../services/category-service.js';
 
-const router = Router();
+const categoryRouter = Router();
 
-router.post('/', adminCheck, emptyObejctCheck, async (req, res, next) => {
+categoryRouter.post('/', adminCheck, emptyObejctCheck, async (req, res, next) => {
       try {
         const { name } = req.body;
         const newCategory = await categoryService.addCategory({ 
@@ -19,7 +19,7 @@ router.post('/', adminCheck, emptyObejctCheck, async (req, res, next) => {
     }
 );
 
-router.get('/', async function (req, res, next) {
+categoryRouter.get('/', async function (req, res, next) {
     try {
       const categories = await categoryService.getCategories();
   
@@ -29,7 +29,7 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.get('/:categoryId', async function (req, res, next) {
+categoryRouter.get('/:categoryId', async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
       const category = await categoryService.getCategory(categoryId);
@@ -40,7 +40,7 @@ router.get('/:categoryId', async function (req, res, next) {
     }
 });
 
-router.put('/:categoryId', adminCheck, emptyObejctCheck, async function (req, res, next) {
+categoryRouter.put('/:categoryId', adminCheck, emptyObejctCheck, async function (req, res, next) {
       try {
         const categoryId = req.params.categoryId;
         const { name } = req.body;
@@ -60,7 +60,7 @@ router.put('/:categoryId', adminCheck, emptyObejctCheck, async function (req, re
     }
 );
 
-router.delete('/:categoryId', adminCheck, async function (req, res, next) {
+categoryRouter.delete('/:categoryId', adminCheck, async function (req, res, next) {
       try {
         const categoryId = req.params.categoryId;
         const category = await categoryService.remove(categoryId);
@@ -72,4 +72,4 @@ router.delete('/:categoryId', adminCheck, async function (req, res, next) {
     }
 );
 
-export { router };
+export { categoryRouter };

@@ -4,9 +4,9 @@ import { adminCheck } from '../middlewares/adminCheck.js';
 import { emptyObejctCheck } from '../middlewares/emptyObjectCheck.js';
 import { userService } from '../services/user-service.js';
 
-const router = Router();
+const userRouter = Router();
 
-router.post('/login', emptyObejctCheck, async function (req, res, next) {
+userRouter.post('/login', emptyObejctCheck, async function (req, res, next) {
     try {
         const { email, password } = req.body;
         const userToken = await userService.getUserToken({ email, password });
@@ -17,7 +17,7 @@ router.post('/login', emptyObejctCheck, async function (req, res, next) {
     }
 });
 
-router.post('/', emptyObejctCheck, async (req, res, next) => {
+userRouter.post('/', emptyObejctCheck, async (req, res, next) => {
     try {
         const { email, name, password, phone, address} = req.body;
         const newUser = await userService.addUser({
@@ -33,7 +33,7 @@ router.post('/', emptyObejctCheck, async (req, res, next) => {
     }
 });
 
-// router.get('/:token', loginRequired, async function (req, res, next) {
+// userRouter.get('/:token', loginRequired, async function (req, res, next) {
 //     try {
 //         const currentUserId = req.currentUserId;
 //         const user = await userService.getUser({ _id: currentUserId });
@@ -43,7 +43,7 @@ router.post('/', emptyObejctCheck, async (req, res, next) => {
 //     }
 // });
 
-router.get('/', loginRequired, async function (req, res, next) {
+userRouter.get('/', loginRequired, async function (req, res, next) {
     try {
         const users = await userService.getUsers();
         res.status(200).json(users);
@@ -52,7 +52,7 @@ router.get('/', loginRequired, async function (req, res, next) {
     }
 });
 
-router.get('/:userId', loginRequired, async function (req, res, next) {
+userRouter.get('/:userId', loginRequired, async function (req, res, next) {
     try {
         const userId = req.params.userId;
         const user = await userService.getUser({ _id: userId });
@@ -62,7 +62,7 @@ router.get('/:userId', loginRequired, async function (req, res, next) {
     }
 });
 
-router.put('/:userId', loginRequired, emptyObejctCheck, async function (req, res, next) {
+userRouter.put('/:userId', loginRequired, emptyObejctCheck, async function (req, res, next) {
     try {
         const userId = req.params.userId;
         const { name, password, address, phone, currentPassword } = req.body;
@@ -83,7 +83,7 @@ router.put('/:userId', loginRequired, emptyObejctCheck, async function (req, res
     }
 });
 
-router.delete('/:userId', loginRequired, async function (req, res, next) {
+userRouter.delete('/:userId', loginRequired, async function (req, res, next) {
     try {
         const currentUserId = req.currentUserId;
         const userId = req.params.userId;
@@ -100,7 +100,7 @@ router.delete('/:userId', loginRequired, async function (req, res, next) {
 
 
 // 관리자
-router.put('/admin/:userId', emptyObejctCheck, adminCheck, async function (req, res, next) {
+userRouter.put('/admin/:userId', emptyObejctCheck, adminCheck, async function (req, res, next) {
     try {
         const userId = req.params.userId;
         const {
@@ -131,7 +131,7 @@ router.put('/admin/:userId', emptyObejctCheck, adminCheck, async function (req, 
     }
 });
 
-router.delete('/admin/:userId', adminCheck, async function (req, res, next) {
+userRouter.delete('/admin/:userId', adminCheck, async function (req, res, next) {
     try {
         const userId = req.params.userId;
         const user = await userService.removeUser(userId);
@@ -141,7 +141,7 @@ router.delete('/admin/:userId', adminCheck, async function (req, res, next) {
     }
 });
 
-// router.get('/admin/check', adminCheck, async function (req, res, next) {
+// userRouter.get('/admin/check', adminCheck, async function (req, res, next) {
 //     try {
 //       res.status(200).json({ result: 'success' });
 //     } catch (error) {
@@ -149,4 +149,4 @@ router.delete('/admin/:userId', adminCheck, async function (req, res, next) {
 //     }
 // });
 
-export { router };
+export { userRouter };

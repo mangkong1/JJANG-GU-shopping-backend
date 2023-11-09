@@ -4,7 +4,7 @@ import { emptyObejctCheck } from '../middlewares/emptyObjectCheck.js';
 import { productService } from '../services/product-service.js';
 import multer from 'multer';
 
-const router = Router();
+const productRouter = Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/upload', upload.array('productImages', 10), async (req, res) => {
+productRouter.post('/upload', upload.array('productImages', 10), async (req, res) => {
     let images = [];
 
     for (let i = 0; i < req.files.length; i++) {
@@ -29,7 +29,7 @@ router.post('/upload', upload.array('productImages', 10), async (req, res) => {
 );
 
 
-router.post('/', adminCheck, emptyObejctCheck, async (req, res, next) => {
+productRouter.post('/', adminCheck, emptyObejctCheck, async (req, res, next) => {
       try {
         const {
             name,
@@ -55,7 +55,7 @@ router.post('/', adminCheck, emptyObejctCheck, async (req, res, next) => {
     }
 );
 
-router.get('/', async function (req, res, next) {
+productRouter.get('/', async function (req, res, next) {
     try {
       const categoryId = req.query.categoryId;
       const page = req.query.page;
@@ -74,7 +74,7 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.get('/:productId', async function (req, res, next) {
+productRouter.get('/:productId', async function (req, res, next) {
     try {
       const productId = req.params.productId;
       const product = await productService.getProduct(productId);
@@ -85,7 +85,7 @@ router.get('/:productId', async function (req, res, next) {
     }
 });
 
-router.put('/:productId', adminCheck, emptyObejctCheck, async function (req, res, next) {
+productRouter.put('/:productId', adminCheck, emptyObejctCheck, async function (req, res, next) {
       try {
         const productId = req.params.productId;
         const {
@@ -117,7 +117,7 @@ router.put('/:productId', adminCheck, emptyObejctCheck, async function (req, res
     }
 );
 
-router.delete('/:productId', adminCheck, async function (req, res, next) {
+productRouter.delete('/:productId', adminCheck, async function (req, res, next) {
       try {
         const productId = req.params.productId;
         const product = await productService.removeProduct(productId);
@@ -129,4 +129,4 @@ router.delete('/:productId', adminCheck, async function (req, res, next) {
     }
 );
 
-export { router };
+export { productRouter };

@@ -3,9 +3,9 @@ import { adminCheck } from '../middlewares/adminCheck.js';
 import { emptyObejctCheck } from '../middlewares/emptyObjectCheck.js';
 import { orderService } from '../services/order-service.js';
 
-const router = Router();
+const orderRouter = Router();
 
-router.post('/', emptyObejctCheck, async (req, res, next) => {
+orderRouter.post('/', emptyObejctCheck, async (req, res, next) => {
     try {
       const {
         name,
@@ -37,7 +37,7 @@ router.post('/', emptyObejctCheck, async (req, res, next) => {
     }
 });
 
-router.get('/', async function (req, res, next) {
+orderRouter.get('/', async function (req, res, next) {
     try {
       const userId = req.query.userId;
       let orders;
@@ -54,7 +54,7 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.get('/:orderId', async function (req, res, next) {
+orderRouter.get('/:orderId', async function (req, res, next) {
     try {
       const orderId = req.params.orderId;
       const order = await orderService.getOrder(orderId);
@@ -65,7 +65,7 @@ router.get('/:orderId', async function (req, res, next) {
     }
 });
 
-router.put('/:orderId', emptyObejctCheck, async function (req, res, next) {
+orderRouter.put('/:orderId', emptyObejctCheck, async function (req, res, next) {
     try {
       const orderId = req.params.orderId;
       const {
@@ -102,7 +102,7 @@ router.put('/:orderId', emptyObejctCheck, async function (req, res, next) {
     }
 });
 
-router.delete('/:orderId', adminCheck, async function (req, res, next) {
+orderRouter.delete('/:orderId', adminCheck, async function (req, res, next) {
     try {
       const orderId = req.params.orderId;
       const order = await orderService.removeOrder(orderId);
@@ -113,4 +113,4 @@ router.delete('/:orderId', adminCheck, async function (req, res, next) {
     }
 });
   
-export { router };
+export { orderRouter };
