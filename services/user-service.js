@@ -35,7 +35,8 @@ class UserService {
     }
 
     async addUser(userInfo) {
-        const { email, name, password, address, role, phone } = userInfo;
+        // const { email, name, password, address, role, phone } = userInfo;
+        const { email, name, password, role, phone } = userInfo;
         const user = await this.userModel.findByEmail(email);
         if (user) {
           throw new Error(
@@ -49,9 +50,9 @@ class UserService {
           fullName,
           email,
           password: hashedPassword,
-          address,
+          // address,
           role,
-          phoneNumber,
+          phone,
         };
     
         const createdNewUser = await this.userModel.create(newUserInfo);

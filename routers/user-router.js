@@ -19,13 +19,14 @@ userRouter.post('/login', emptyObejctCheck, async function (req, res, next) {
 
 userRouter.post('/', emptyObejctCheck, async (req, res, next) => {
     try {
-        const { email, name, password, phone, address} = req.body;
+        // const { email, name, password, phone, address} = req.body;
+        const { email, name, password, phone } = req.body;
         const newUser = await userService.addUser({
             email,
             name,
             password,
             phone,
-            address,
+            // address,
         });
         res.status(201).json(newUser);
     } catch (error) {
@@ -65,12 +66,13 @@ userRouter.get('/:userId', loginRequired, async function (req, res, next) {
 userRouter.put('/:userId', loginRequired, emptyObejctCheck, async function (req, res, next) {
     try {
         const userId = req.params.userId;
-        const { name, password, address, phone, currentPassword } = req.body;
+        // const { name, password, address, phone, currentPassword } = req.body;
+        const { name, password, phone, currentPassword } = req.body;
         const userInfoRequired = { userId, currentPassword };
         const toUpdate = {
             ...(name && { name }),
             ...(password && { password }),
-            ...(address && { address }),
+            // ...(address && { address }),
             ...(phone && { phone }),
         };
         const updatedUserInfo = await userService.updateUser(
@@ -106,7 +108,7 @@ userRouter.put('/admin/:userId', emptyObejctCheck, adminCheck, async function (r
         const {
           name,
           password,
-          address,
+        //   address,
           phone,
           role,
           currentPassword,
@@ -116,7 +118,7 @@ userRouter.put('/admin/:userId', emptyObejctCheck, adminCheck, async function (r
         const toUpdate = {
           ...(name && { name }),
           ...(password && { password }),
-          ...(address && { address }),
+        //   ...(address && { address }),
           ...(phone && { phone }),
           ...(role && { role }),
         };
