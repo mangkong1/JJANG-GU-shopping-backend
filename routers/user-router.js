@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { loginRequired } from '../middlewares/loginRequired';
-import { adminCheck } from '../middlewares/adminCheck';
-import { emptyObejctCheck } from '../middlewares/emptyObjectCheck';
-import { userService } from '../services/user-service';
+import { loginRequired } from '../middlewares/loginRequired.js';
+import { adminCheck } from '../middlewares/adminCheck.js';
+import { emptyObejctCheck } from '../middlewares/emptyObjectCheck.js';
+import { userService } from '../services/user-service.js';
 
 const router = Router();
 
