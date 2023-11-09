@@ -5,7 +5,7 @@ export function dbConnect() {
 
 const DB_URL = process.env.Atlas_URL;
 
-mongoose.connect("mongodb+srv://normaljun95:v1NqDYux70qcM98p@cluster0.ji01klw.mongodb.net/?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://normaljun95:v1NqDYux70qcM98p@cluster0.ji01klw.mongodb.net/Team3?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('connected', () => {
     console.log('Successfully connected to database');

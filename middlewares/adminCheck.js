@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 function adminCheck(req, res, next) {
   const userToken = req.headers['authorization']?.split(' ')[1];
 
+  console.log(`reqHeader: ${JSON.stringify(req.headers.authorization)}`); 
+  	
   if (!userToken || userToken === 'null') {
     console.log('서비스 사용 요청이 있습니다.하지만, Authorization 토큰: 없음');
     res.status(401).json({
