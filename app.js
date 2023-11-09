@@ -8,8 +8,10 @@ import { orderRouter } from './routers/order-router.js';
 
 import { errorHandler } from './middlewares/error-handler.js';
 
+import {dbConnect} from './db/index.js'
 const app = express();
 
+dbConnect();
 app.use(cors());
 
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
@@ -30,4 +32,6 @@ app.use('/api/orders', orderRouter);
 
 
 app.use(errorHandler);
-export { app };
+
+app.listen(5000, ()=> {console.log("start server")})
+
