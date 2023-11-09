@@ -72,4 +72,4 @@ router.delete('/:categoryId', adminCheck, async function (req, res, next) {
     }
 );
 
-export { categoryRouter };
+export { router };

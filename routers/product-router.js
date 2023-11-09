@@ -129,4 +129,4 @@ router.delete('/:productId', adminCheck, async function (req, res, next) {
     }
 );
 
-export { productRouter };
+export { router };

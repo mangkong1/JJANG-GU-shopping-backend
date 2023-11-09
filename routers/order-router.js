@@ -113,4 +113,4 @@ router.delete('/:orderId', adminCheck, async function (req, res, next) {
     }
 });
   
-export { orderRouter };
+export { router };

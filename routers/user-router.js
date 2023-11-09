@@ -149,4 +149,4 @@ router.delete('/admin/:userId', adminCheck, async function (req, res, next) {
 //     }
 // });
 
-export { userRouter };
+export { router };
