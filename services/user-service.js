@@ -47,8 +47,8 @@ class UserService {
         const hashedPassword = await bcrypt.hash(password, 10);
     
         const newUserInfo = {
-          fullName,
           email,
+	  name,
           password: hashedPassword,
           // address,
           role,

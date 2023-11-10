@@ -18,7 +18,8 @@ class OrderService {
   }
 
   async getOrder(orderId) {
-    const order = await this.orderModel.findById(orderId).lean();
+    //const order = await this.orderModel.findById(orderId).lean();
+    const order = await this.orderModel.findById(orderId);
 
     if (!order) {
       throw new Error('등록된 주문이 없습니다. 다시 한 번 확인해 주세요.');
@@ -27,7 +28,7 @@ class OrderService {
     let totalPrice = 0;
 
     for (let i = 0; i < order.products.length; i++) {
-      totalPrice += order.products[i].productId.price * order.products[i].qty;
+      totalPrice += order.products[i].price * order.products[i].qty;
     }
 
     return { ...order, totalPrice };

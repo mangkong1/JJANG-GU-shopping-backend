@@ -65,7 +65,8 @@ productRouter.get('/', async function (req, res, next) {
       if (categoryId) {
         products = await productService.getProductsByCategoryId(categoryId);
       } else {
-        products = await productService.getProducts(page, perPage);
+        //products = await productService.getProducts(page, perPage);
+	products = await productService.getProducts();
       }
   
       res.status(200).json(products);

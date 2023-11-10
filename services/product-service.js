@@ -1,4 +1,5 @@
 import { productModel } from "../db/models/product-model.js";
+import { skip } from "rxjs/operators";
 
 class ProductService {
     constructor(productModel) {
@@ -31,19 +32,20 @@ class ProductService {
         return createdNewProduct;
     }
 
-    async getProducts(page, perPage) {
-        let products;
+    async getProducts() {
+        return await this.productModel.findAll();
+	//let products;
 
-        if ((page, perPage)) {
-            products = await this.productModel
-            .findAll()
-            .skip(perPage * (page - 1))
-            .limit(perPage);
-        } else {
-            products = await this.productModel.findAll();
-        }
+        //if ((page, perPage)) {
+        //    products = await this.productModel
+        //    .findAll()
+        //    .skip(perPage * (page - 1))
+        //    .limit(perPage);
+        //} else {
+        //    products = await this.productModel.findAll();
+        //}
 
-        return products;
+        //return products;
     }
 
     async getProductsByCategoryId(categoryId) {

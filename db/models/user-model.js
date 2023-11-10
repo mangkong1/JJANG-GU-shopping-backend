@@ -23,7 +23,7 @@ export class UserModel {
     async findById(userId) {
         const userResult = await User.aggregate([
             {
-                $match: { _id: Types.ObjectId(userId) }
+                $match: { _id: new Types.ObjectId(userId) }
             }
         ]);
         return userResult[0]; // 결과는 배열로 반환되므로 첫 번째 항목을 반환

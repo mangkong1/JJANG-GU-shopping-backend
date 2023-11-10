@@ -64,9 +64,10 @@ export class OrderModel {
     }
 
     async findById(orderId) {
+	//return await Order.findOne({ _id: orderId }, '-__v -products._id').populate('products.productId');
         const orderResult = await Order.aggregate([
             {
-                $match: { _id: Types.ObjectId(orderId) }
+                $match: { _id: new Types.ObjectId(orderId) }
             },
             {
                 $lookup: {

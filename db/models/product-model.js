@@ -24,7 +24,7 @@ export class ProductModel {
         // 1. `$match` 단계: MongoDB에서 `_id`가 `productId`와 일치하는 상품을 필터링
         const productResult = await Product.aggregate([
             {
-                $match: { _id: Types.ObjectId(productId) }
+                $match: { _id: new Types.ObjectId(productId) }
             },
             // 2. `$lookup` 단계: `category` 필드와 `categories` 컬렉션을 연결하여 카테고리 정보를 가져옴.
             {
@@ -40,6 +40,10 @@ export class ProductModel {
                 $project: {
                     _id: 1,
                     name: 1,
+		    price: 1,
+		    stock: 1,
+		    images: 1,
+		    description: 1,
                     category: { _id:1, name: 1}
                 }
             }
@@ -51,7 +55,7 @@ export class ProductModel {
     async findByCategoryId(categoryId) {
         const productResult = await Product.aggregate([
             {
-                $match: { category: Types.ObjectId(categoryId) }
+                $match: { category: new Types.ObjectId(categoryId) }
             },
             {
                 $lookup: {
@@ -65,6 +69,10 @@ export class ProductModel {
                 $project: {
                     _id: 1,
                     name: 1,
+		    price: 1,
+		    stock: 1,
+		    images: 1,
+		    description: 1,
                     category: { _id: 1, name: 1 }
                 }
             }
@@ -86,6 +94,10 @@ export class ProductModel {
                 $project: {
                     _id: 1,
                     name: 1,
+		    price: 1,
+		    stock: 1,
+		    images: 1,
+		    description: 1,
                     category: { _id: 1, name: 1 }
                 }
             }

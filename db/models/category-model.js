@@ -18,7 +18,7 @@ export class CategoryModel {
     async findById(categoryId) {
         const categoryResult = await Category.aggregate([
             {
-                $match: { _id: Types.ObjectId(categoryId) } //해당 쿼리/조건에 일치하는 값만 반환
+                $match: { _id: new Types.ObjectId(categoryId) } //해당 쿼리/조건에 일치하는 값만 반환
             },
             {
                 $lookup: {
