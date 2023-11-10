@@ -14,7 +14,7 @@ export class OrderModel {
         address,
         paymentMethod,
         qty,
-        password,
+        // password,
         products,
       }) {
         const orderResult = await Order.create({
@@ -25,7 +25,7 @@ export class OrderModel {
             address,
             paymentMethod,
             qty,
-            password,
+            // password,
             products,
         });
         return orderResult;

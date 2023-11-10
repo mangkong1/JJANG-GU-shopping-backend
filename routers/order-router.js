@@ -15,7 +15,7 @@ orderRouter.post('/', emptyObejctCheck, async (req, res, next) => {
         address,
         paymentMethod,
         qty,
-        password,
+        // password,
         products,
       } = req.body;
   
@@ -27,7 +27,7 @@ orderRouter.post('/', emptyObejctCheck, async (req, res, next) => {
         address,
         paymentMethod,
         qty,
-        password,
+        // password,
         products,
       });
   
@@ -76,7 +76,7 @@ orderRouter.put('/:orderId', emptyObejctCheck, async function (req, res, next) {
         status,
         email,
         qty,
-        password,
+        // password,
         productIds,
       } = req.body;
       const orderInfoRequired = { orderId };
@@ -88,7 +88,7 @@ orderRouter.put('/:orderId', emptyObejctCheck, async function (req, res, next) {
         ...(status && { status }),
         ...(email && { email }),
         ...(qty && { qty }),
-        ...(password && { password }),
+        // ...(password && { password }),
         ...(productIds && { products: productIds }),
       };
       const updatedOrderInfo = await orderService.updateOrder(

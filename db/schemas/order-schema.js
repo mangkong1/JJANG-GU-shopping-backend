@@ -33,9 +33,9 @@ const OrderSchema = new Schema(
         qty: {
             type: Number,
         },
-        password: {
-            type: String,
-        },
+        // password: {
+        //     type: String,
+        // },
         products: [
             {
                 productId: {
