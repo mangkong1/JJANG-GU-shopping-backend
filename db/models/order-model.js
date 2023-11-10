@@ -32,7 +32,20 @@ export class OrderModel {
     }
     
     // 주문 조회
-    async findAll() {
+
+    findAll() {
+	return Order.find({}).populate('products.productId');
+    }
+
+    findAllByUserId(userId) {
+	return Order.find({ userId }).populate('products.productId');
+    }
+
+    findById(orderId) {
+	return Order.findOne({ _id: orderId }, '-__v -products._id').populate('products.productId');
+    }
+
+    async findAll0() {
         const orderResult = await Order.aggregate([
             {
                 $lookup: {
@@ -46,7 +59,7 @@ export class OrderModel {
         return orderResult;
     }
 
-    async findAllByUserId(userId) {
+    async findAllByUserId0(userId) {
         const orderResult = await Order.aggregate([
             {
                 $match: { userId }
@@ -60,10 +73,11 @@ export class OrderModel {
                 }
             }
         ]);
+	
         return orderResult;
     }
 
-    async findById(orderId) {
+    async findById0(orderId) {
 	//return await Order.findOne({ _id: orderId }, '-__v -products._id').populate('products.productId');
         const orderResult = await Order.aggregate([
             {
@@ -78,7 +92,7 @@ export class OrderModel {
                 }
             },
             {
-                $project: { __v: 0 }
+                $project: { __v: 0, 'products._id': 0 }
             }
         ]);
         return orderResult[0]; // 결과는 배열로 반환되므로 첫 번째 항목을 반환

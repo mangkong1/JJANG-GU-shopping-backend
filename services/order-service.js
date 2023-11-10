@@ -28,10 +28,10 @@ class OrderService {
     let totalPrice = 0;
 
     for (let i = 0; i < order.products.length; i++) {
-      totalPrice += order.products[i].price * order.products[i].qty;
+      totalPrice += order.products[i].productId.price * order.products[i].qty;
     }
 
-    return { ...order, totalPrice };
+    return { order, totalPrice };
   }
 
   async updateOrder(orderInfoRequired, toUpdate) {
