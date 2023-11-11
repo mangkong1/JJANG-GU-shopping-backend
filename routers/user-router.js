@@ -67,9 +67,11 @@ userRouter.put('/:userId', loginRequired, emptyObejctCheck, async function (req,
     try {
         const userId = req.params.userId;
         // const { name, password, address, phone, currentPassword } = req.body;
-        const { name, password, phone, currentPassword } = req.body;
-        const userInfoRequired = { userId, currentPassword };
-        const toUpdate = {
+        //const { name, password, phone, currentPassword } = req.body;
+	const { name, password, phone } = req.body;
+        //const userInfoRequired = { userId, currentPassword };
+        const userInfoRequired = { userId };
+	const toUpdate = {
             ...(name && { name }),
             ...(password && { password }),
             // ...(address && { address }),
@@ -108,13 +110,14 @@ userRouter.put('/admin/:userId', emptyObejctCheck, adminCheck, async function (r
         const {
           name,
           password,
-        //   address,
+          // address,
           phone,
           role,
-          currentPassword,
+          //currentPassword,
         } = req.body;
   
-        const userInfoRequired = { userId, currentPassword };
+        //const userInfoRequired = { userId, currentPassword };
+	const userInfoRequired = { userId };
         const toUpdate = {
           ...(name && { name }),
           ...(password && { password }),

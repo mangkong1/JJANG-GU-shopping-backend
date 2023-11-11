@@ -69,29 +69,30 @@ class UserService {
     }
 
     async updateUser(userInfoRequired, toUpdate) {
-        const { userId, currentPassword } = userInfoRequired;
+        //const { userId, currentPassword } = userInfoRequired;
+	const { userId } = userInfoRequired;
         let user = await this.userModel.findById(userId);
     
         if (!user) {
           throw new Error('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
         }
     
-        const correctPasswordHash = user.password;
-        const isPasswordCorrect = await bcrypt.compare(
-          currentPassword,
-          correctPasswordHash
-        );
+        //const correctPasswordHash = user.password;
+        //const isPasswordCorrect = await bcrypt.compare(
+        //  currentPassword,
+        //  correctPasswordHash
+        //);
     
-        if (!isPasswordCorrect) {
-          throw new Error('현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.');
-        }
+        //if (!isPasswordCorrect) {
+        //  throw new Error('현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.');
+        //}
     
-        const { password } = toUpdate;
+        //const { password } = toUpdate;
     
-        if (password) {
-          const newPasswordHash = await bcrypt.hash(password, 10);
-          toUpdate.password = newPasswordHash;
-        }
+        //if (password) {
+        //  const newPasswordHash = await bcrypt.hash(password, 10);
+        //  toUpdate.password = newPasswordHash;
+        //}
     
         user = await this.userModel.update({
           userId,
